@@ -1,0 +1,13 @@
+﻿langchain
+langchain-community
+langchain-huggingface
+chromadb
+sentence-transformers
+pypdf
+python-docx
+unstructured
+notebook
+langchain-ollama
+langchain-openai
+dash
+dash-bootstrap-components
