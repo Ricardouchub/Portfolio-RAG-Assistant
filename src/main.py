@@ -8,7 +8,7 @@ from langchain.prompts import PromptTemplate
 from langchain.schema.output_parser import StrOutputParser
 from langchain.schema.runnable import RunnablePassthrough
 
-# --- Configuration ---
+# --- Configuracion ---
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PERSIST_DIRECTORY = os.path.abspath(os.path.join(BASE_DIR, "..", "chroma_db"))
 COLLECTION_NAME = "portfolio"
@@ -17,6 +17,7 @@ DEFAULT_CHAT_MODEL = "deepseek-chat"
 DEFAULT_BASE_URL = "https://api.deepseek.com"
 
 
+# --- Funcion de construccion de embeddings ---
 def _build_embeddings():
     """Mirror ingest.py embedding settings so query vectors match the store."""
     try:
