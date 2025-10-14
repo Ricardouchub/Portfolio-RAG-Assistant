@@ -16,20 +16,20 @@ Retrieval-Augmented Generation (RAG) toolkit for showcasing a software/data port
 2. **Retrieval + Generation (src/main.py)**
    - Recreates the same BGE embedding pipeline, opens the portfolio collection, and retrieves context (k=3).
    - Streams grounded answers from DeepSeek via LangChain.
-3. **Interactive UI (pp.py)**
+3. **Interactive UI (App.py)**
    - Dash + Bootstrap interface mirroring the CLI pipeline.
    - Prompts for the DeepSeek API key at runtime, exposes instructions, and maintains a history panel.
 
-`
+```
 portfolio_data/  -->  ingest.py  -->  chroma_db/ (collection: portfolio)
                                            |
                  +-------------------------+------------------------+
                  |                                                  |
              main.py (CLI)                                    app.py (Dash)
-`
+```
 
 ## Project Structure
-`
+```
 .
 |-- assets/
 |   -- custom.css          # Dash styling (fonts, glassmorphism, history panel)
@@ -41,49 +41,49 @@ portfolio_data/  -->  ingest.py  -->  chroma_db/ (collection: portfolio)
 |-- app.py                  # Dash web app for interactive exploration
 |-- requirements.txt        # Python dependencies
 -- README.md
-`
+```
 
 ## Getting Started
 1. **Prepare your data:** Clone/unzip the repo and drop all portfolio projects (any depth) inside portfolio_data/.
 2. **Install dependencies** (Python 3.10+ recommended):
-   `ash
+   ```Bash
    pip install -r requirements.txt
-   `
+   ```
 3. **Ingest the projects** whenever files change:
-   `ash
+   ```Bash
    python src/ingest.py
-   `
+   ```
    This creates/updates chroma_db/ with the portfolio collection.
 4. **Choose your interface:**
    - **Terminal assistant**
-     `ash
+     ```Bash
      python src/main.py
-     `
+     ```
      Provide your DeepSeek API key when prompted (or export DEEPSEEK_API_KEY). Ask questions in natural language.
    - **Dash web app**
-     `ash
+     ```Bash
      python app.py
-     `
+     ```
      Open http://127.0.0.1:8050, paste your API key, pick a model, and start querying. The UI highlights configuration tips and keeps the conversation history.
 
 ## Configuration & Customization
 - **DeepSeek settings:**
-  - DEEPSEEK_API_KEY – optional environment variable to skip the prompt.
-  - DEEPSEEK_CHAT_MODEL / DEEPSEEK_BASE_URL – override defaults for alternative endpoints or models.
+  - DEEPSEEK_API_KEY ï¿½ optional environment variable to skip the prompt.
+  - DEEPSEEK_CHAT_MODEL / DEEPSEEK_BASE_URL ï¿½ override defaults for alternative endpoints or models.
 - **Loader support:** Extend LOADER_MAPPING in src/ingest.py to add CSVs, HTML, proprietary formats, or tweak notebook output inclusion.
 - **Chunking parameters:** Adjust prose/code chunk sizes and overlaps to balance recall vs. latency.
 - **Retriever behaviour:** Modify RETRIEVER_K, RETRIEVER_FETCH_K, or switch search_type if you prefer plain similarity search.
 - **Embeddings:** Swap EMBEDDINGS_MODEL for a lighter model if resources are limited, but remember to adjust main.py and pp.py accordingly.
 
 ## Sample Prompts
-- *"Resume la arquitectura del proyecto de detección de fraude."*
-- *"¿Qué métricas se reportan en el notebook de churn?"*
+- *"Resume la arquitectura del proyecto de detecciï¿½n de fraude."*
+- *"ï¿½Quï¿½ mï¿½tricas se reportan en el notebook de churn?"*
 - *"Explica los pasos para entrenar el modelo de series temporales."*
 
 ## Troubleshooting
-- **"Vector store not found"** – run python src/ingest.py so chroma_db/ exists before launching the assistant/app.
-- **Dimension mismatch errors** – verify all entry points use the same embedding model (BAAI/bge-m3) and rerun ingestion after changing loaders or embeddings.
-- **Dash callback ID warnings** – make sure the app server picked up the latest layout (stop and restart python app.py).
+- **"Vector store not found"** ï¿½ run python src/ingest.py so chroma_db/ exists before launching the assistant/app.
+- **Dimension mismatch errors** ï¿½ verify all entry points use the same embedding model (BAAI/bge-m3) and rerun ingestion after changing loaders or embeddings.
+- **Dash callback ID warnings** ï¿½ make sure the app server picked up the latest layout (stop and restart python app.py).
 
 ## Roadmap Ideas
 - Automate ingestion via pre-commit or CI pipelines.
