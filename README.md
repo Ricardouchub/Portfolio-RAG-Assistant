@@ -92,7 +92,7 @@ Para las pruebas iniciales se incluyó únicamente el repositorio de la librerí
 - **Soporte de loaders:** amplía `LOADER_MAPPING` en `src/ingest.py` para añadir CSV, HTML u otros formatos propietarios; también puedes activar/desactivar la inclusión de salidas en notebooks.
 - **Parámetros de segmentación:** ajusta los tamaños y solapes de los chunks para equilibrar el recall frente a la latencia; separa prosa y código según tus necesidades.
 - **Comportamiento del recuperador:** modifica `RETRIEVER_K`, `RETRIEVER_FETCH_K` o cambia `search_type` si prefieres una búsqueda por similitud simple en lugar de MMR.
-- **Embeddings:** intercambia `EMBEDDINGS_MODEL` por un modelo más ligero si tienes recursos limitados, pero recuerda ajustar también `main.py` y `app.py`.
+- **Embeddings:** intercambia `EMBEDDINGS_MODEL` por un modelo más ligero en caso de tener recursos limitados, pero se debe ajustar también `main.py` y `app.py`.
 
 ## Ejemplos de consulta
 
