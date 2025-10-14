@@ -7,7 +7,7 @@
 ![Vector Store](https://img.shields.io/badge/Vector%20Store-ChromaDB-purple)
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
 
-Asistente RAG que ingiere la carpeta de proyectos local, construye un índice persistente en **ChromaDB** con embeddings de última generación **BGE‑M3** y responde preguntas a través de un LLM **DeepSeek**.
+Asistente RAG que ingiere la carpeta de proyectos local, construye un índice persistente en **ChromaDB** con embeddings avanzados **BGE‑M3** y responde preguntas a través de un LLM **DeepSeek**.
 
 Para las pruebas iniciales se incluyó únicamente el repositorio de la librería evalcards, una biblioteca en Python que genera reportes de evaluación para modelos supervisados en Markdown y JSON, con métricas y gráficos listos para usar. Ingerir este repositorio demuestra cómo el pipeline procesa documentación, código y notebooks de proyectos reales.
 
