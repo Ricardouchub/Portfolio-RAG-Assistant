@@ -1,4 +1,4 @@
-﻿import os
+import os
 
 import dash
 import dash_bootstrap_components as dbc
@@ -11,8 +11,10 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_openai import ChatOpenAI
 
 # --- RAG Configuration ---
-PERSIST_DIRECTORY = "./chroma_db"
-EMBEDDINGS_MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+PERSIST_DIRECTORY = os.path.abspath(os.path.join(BASE_DIR, "chroma_db"))
+COLLECTION_NAME = "portfolio"
+EMBEDDINGS_MODEL_NAME = "BAAI/bge-m3"
 DEFAULT_CHAT_MODEL = "deepseek-chat"
 DEFAULT_BASE_URL = os.getenv("DEEPSEEK_BASE_URL", "https://api.deepseek.com")
 AVAILABLE_MODELS = [
@@ -21,15 +23,32 @@ AVAILABLE_MODELS = [
 ]
 
 
+def _build_embeddings():
+    """Mirror ingest/main embedding settings so retrieved vectors are compatible."""
+    try:
+        import torch
+
+        device = "cuda" if torch.cuda.is_available() else "cpu"
+    except Exception:
+        device = "cpu"
+
+    return HuggingFaceEmbeddings(
+        model_name=EMBEDDINGS_MODEL_NAME,
+        model_kwargs={"device": device},
+        encode_kwargs={"normalize_embeddings": True},
+    )
+
+
 rag_ready = os.path.isdir(PERSIST_DIRECTORY)
 retriever = None
 prompt = None
 
 if rag_ready:
-    embeddings = HuggingFaceEmbeddings(model_name=EMBEDDINGS_MODEL_NAME)
+    embeddings = _build_embeddings()
     vector_store = Chroma(
         persist_directory=PERSIST_DIRECTORY,
         embedding_function=embeddings,
+        collection_name=COLLECTION_NAME,
     )
     retriever = vector_store.as_retriever(search_kwargs={"k": 3})
 
@@ -129,131 +148,122 @@ def build_layout() -> html.Div:
         className="hero-section",
     )
 
-    instructions_card = html.Div(
+    instructions_card = dbc.Card(
         [
-            html.Div("Como usar la aplicacion", className="section-title"),
-            html.Ol(
+            dbc.CardHeader("Indicaciones", className="card-header-glass"),
+            dbc.CardBody(
                 [
-                    html.Li(
-                        [
-                            html.Span("Inicia preparando la base de conocimiento ejecutando src/ingest.py si aun no lo hiciste."),
-                        ],
-                        className="instruction-item",
+                    html.P(
+                        "1. Ejecuta la ingesta (src/ingest.py) para indexar tu portafolio.",
+                        className="mb-2",
                     ),
-                    html.Li(
-                        [
-                            html.Span("Introduce tu API key de DeepSeek; nunca se almacena y solo se usa durante tu sesion."),
-                        ],
-                        className="instruction-item",
+                    html.P(
+                        "2. Introduce tu API key de DeepSeek en el campo correspondiente.",
+                        className="mb-2",
                     ),
-                    html.Li(
-                        [
-                            html.Span("Selecciona el modelo disponible y formula tu pregunta sobre el portafolio."),
-                        ],
-                        className="instruction-item",
-                    ),
-                    html.Li(
-                        [
-                            html.Span("Consulta el panel de resultados y revisa el historial para repetir consultas recientes."),
-                        ],
-                        className="instruction-item",
+                    html.P(
+                        "3. Formula preguntas sobre tus proyectos y conoce respuestas con contexto.",
+                        className="mb-0",
                     ),
                 ],
-                className="instructions-list mb-0",
+                className="card-body-glass",
             ),
         ],
-        className="glass-card p-4",
+        className="glass-card",
     )
 
-    configuration_card = html.Div(
+    configuration_card = dbc.Card(
         [
-            html.Div("Configuracion", className="section-title d-flex align-items-center justify-content-between"),
-            dbc.Row(
+            dbc.CardHeader("Configuracion", className="card-header-glass"),
+            dbc.CardBody(
                 [
-                    dbc.Col(
+                    dbc.Row(
                         [
-                            dbc.Label("API Key de DeepSeek"),
-                            dbc.Input(
-                                id="api-key-input",
-                                type="password",
-                                placeholder="Introduce tu API key",
+                            dbc.Col(
+                                [
+                                    html.Label("API Key", className="form-label"),
+                                    dbc.Input(
+                                        id="api-key-input",
+                                        type="password",
+                                        placeholder="Ingresa tu API key de DeepSeek",
+                                    ),
+                                ],
+                                md=6,
                             ),
-                        ],
-                        lg=6,
-                        className="mb-3",
+                            dbc.Col(
+                                [
+                                    html.Label("Modelo", className="form-label"),
+                                    dcc.Dropdown(
+                                        id="model-select",
+                                        options=AVAILABLE_MODELS,
+                                        value=DEFAULT_CHAT_MODEL,
+                                        clearable=False,
+                                    ),
+                                ],
+                                md=6,
+                            ),
+                        ]
+                    )
+                ],
+                className="card-body-glass",
+            ),
+        ],
+        className="glass-card",
+    )
+
+    question_card = dbc.Card(
+        [
+            dbc.CardBody(
+                [
+                    html.Label("Pregunta", className="form-label"),
+                    dbc.Textarea(
+                        id="question-input",
+                        placeholder="Ej. Describe la arquitectura del proyecto X",
+                        className="question-input",
                     ),
-                    dbc.Col(
+                    dbc.Button(
                         [
-                            dbc.Label("Modelo"),
-                            dcc.Dropdown(
-                                id="model-select",
-                                options=AVAILABLE_MODELS,
-                                value=DEFAULT_CHAT_MODEL,
-                                clearable=False,
-                                className="dash-dropdown",
-                            ),
+                            html.I(className="bi bi-send me-2"),
+                            "Preguntar",
                         ],
-                        lg=3,
-                        className="mb-3",
-                    ),
-                    dbc.Col(
-                        [
-                            dbc.Label("Base URL"),
-                            html.Div(
-                                DEFAULT_BASE_URL,
-                                className="fixed-field",
-                            ),
-                        ],
-                        lg=3,
-                        className="mb-3",
+                        id="ask-button",
+                        color="primary",
+                        className="mt-3",
                     ),
                 ],
-                className="g-3",
+                className="card-body-glass",
             ),
         ],
-        className="glass-card p-4",
+        className="glass-card",
     )
 
-    question_card = html.Div(
+    answer_placeholder = dbc.Card(
         [
-            html.Div("Consulta", className="section-title"),
-            dcc.Textarea(
-                id="question-input",
-                className="form-control mb-3",
-                placeholder="Que quieres descubrir de tu portafolio hoy?",
-                style={"height": "180px"},
-            ),
-            dbc.Button(
-                [html.I(className="bi bi-send me-2"), "Consultar"],
-                id="ask-button",
-                color="primary",
-                className="px-4",
+            dbc.CardBody(
+                [
+                    html.Div("Respuesta", className="section-title"),
+                    html.P(
+                        "Formula una pregunta para ver la respuesta aqui.",
+                        className="text-secondary mb-0",
+                    ),
+                ],
+                className="card-body-glass",
             ),
         ],
-        className="glass-card p-4 h-100",
+        className="glass-card",
     )
 
-    answer_placeholder = html.Div(
+    history_card = dbc.Card(
         [
-            html.Div("Respuesta", className="section-title"),
-            html.Div(
-                dcc.Markdown(
-                    "Las respuestas apareceran aqui despues de enviar una pregunta.",
-                    className="mb-0",
-                ),
-                className="answer-content",
+            dbc.CardBody(
+                [
+                    html.Div("Historial", className="section-title"),
+                    html.Div(id="history-list", className="history-list"),
+                ],
+                className="card-body-glass",
             ),
         ],
-        id="answer-card",
-        className="glass-card p-4 h-100 answer-card",
-    )
-
-    history_card = html.Div(
-        [
-            html.Div("Historial de consultas", className="section-title"),
-            html.Div(id="history-list", className="history-list"),
-        ],
-        className="glass-card p-4 h-100 history-card",
+        className="glass-card",
     )
 
     main_content = dbc.Container(

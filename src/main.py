@@ -1,5 +1,6 @@
-﻿import os
+import os
 from getpass import getpass
+
 from langchain_community.vectorstores import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_openai import ChatOpenAI
@@ -8,10 +9,28 @@ from langchain.schema.output_parser import StrOutputParser
 from langchain.schema.runnable import RunnablePassthrough
 
 # --- Configuration ---
-PERSIST_DIRECTORY = "./chroma_db"
-EMBEDDINGS_MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+PERSIST_DIRECTORY = os.path.abspath(os.path.join(BASE_DIR, "..", "chroma_db"))
+COLLECTION_NAME = "portfolio"
+EMBEDDINGS_MODEL_NAME = "BAAI/bge-m3"
 DEFAULT_CHAT_MODEL = "deepseek-chat"
 DEFAULT_BASE_URL = "https://api.deepseek.com"
+
+
+def _build_embeddings():
+    """Mirror ingest.py embedding settings so query vectors match the store."""
+    try:
+        import torch
+
+        device = "cuda" if torch.cuda.is_available() else "cpu"
+    except Exception:
+        device = "cpu"
+
+    return HuggingFaceEmbeddings(
+        model_name=EMBEDDINGS_MODEL_NAME,
+        model_kwargs={"device": device},
+        encode_kwargs={"normalize_embeddings": True},
+    )
 
 
 if not os.path.isdir(PERSIST_DIRECTORY):
@@ -31,8 +50,12 @@ if not deepseek_api_key:
 chat_model = os.getenv("DEEPSEEK_CHAT_MODEL", DEFAULT_CHAT_MODEL)
 base_url = os.getenv("DEEPSEEK_BASE_URL", DEFAULT_BASE_URL)
 
-embeddings = HuggingFaceEmbeddings(model_name=EMBEDDINGS_MODEL_NAME)
-vector_store = Chroma(persist_directory=PERSIST_DIRECTORY, embedding_function=embeddings)
+embeddings = _build_embeddings()
+vector_store = Chroma(
+    persist_directory=PERSIST_DIRECTORY,
+    embedding_function=embeddings,
+    collection_name=COLLECTION_NAME,
+)
 retriever = vector_store.as_retriever(search_kwargs={"k": 3})
 
 template = """

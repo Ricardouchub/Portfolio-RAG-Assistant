@@ -1,0 +1,41 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "evalcards"
+version = "0.2.11"
+description = "Reportes de evaluación (clasificación/regresión/forecast) a Markdown con gráficos"
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [{ name = "Ricardo Urdaneta", email = "ricardourdanetacastro@gmail.com" }]
+license = { text = "MIT" }
+dependencies = [
+  "numpy>=1.22",
+  "pandas>=1.5",
+  "scikit-learn>=1.3",
+  "matplotlib>=3.7",
+  "jinja2>=3.1"
+]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/evalcards"]
+
+[project.scripts]
+evalcards = "evalcards.report:main"
+
+[project.urls]
+Homepage = "https://github.com/Ricardouchub/evalcards"
+Repository = "https://github.com/Ricardouchub/evalcards"
+Issues = "https://github.com/Ricardouchub/evalcards/issues"
