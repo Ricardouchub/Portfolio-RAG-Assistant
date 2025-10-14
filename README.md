@@ -6,7 +6,7 @@
 ![Embeddings](https://img.shields.io/badge/Embeddings-BGE--M3-orange)
 ![Vector Store](https://img.shields.io/badge/Vector%20Store-ChromaDB-purple)
 ![LangChain](https://img.shields.io/badge/LangChain-Framework-00BFFF?logo=chainlink&logoColor=white)
-![DeepSeek](https://img.shields.io/badge/DeepSeek-LLM%20Integration-8A2BE2?logo=deepnote&logoColor=white)
+![DeepSeek](https://img.shields.io/badge/DeepSeek-LLM-8A2BE2?logo=deepnote&logoColor=white)
 
 
 
