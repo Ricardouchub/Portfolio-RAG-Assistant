@@ -283,7 +283,7 @@ def build_layout() -> html.Div:
                 [
                     dbc.Col(question_card, lg=5, className="mb-4"),
                     dbc.Col(
-                        dcc.Loading(answer_placeholder, type="dot", color="#5f9bff"),
+                        dcc.Loading(answer_placeholder, type="dot", color="#5f9bff", id="answer-card"),
                         lg=4,
                         className="mb-4",
                     ),
