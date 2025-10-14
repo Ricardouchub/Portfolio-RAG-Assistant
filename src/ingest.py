@@ -13,13 +13,11 @@ from langchain_community.document_loaders import (
 
 # --- Splitters (tokens y code-aware) ---
 try:
-    # Paquete nuevo recomendado
     from langchain_text_splitters import RecursiveCharacterTextSplitter, Language
 except ImportError:
-    # Fallback (algunas instalaciones)
     from langchain.text_splitter import RecursiveCharacterTextSplitter
     from enum import Enum
-    class Language(Enum):  # fallback mínimo
+    class Language(Enum): 
         PYTHON = "python"
 
 # --- Vector store + embeddings ---
@@ -33,9 +31,8 @@ try:
     def count_tokens(text: str) -> int:
         return len(_enc.encode(text or ""))
 except Exception:
-    # Fallback por caracteres si no tienes tiktoken
     def count_tokens(text: str) -> int:
-        return max(1, int(len(text or "") / 4))  # ~4 chars ≈ 1 token (aprox)
+        return max(1, int(len(text or "") / 4)) 
 
 
 # =======================
@@ -45,8 +42,8 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 SOURCE_DIRECTORY = os.path.join(os.path.dirname(__file__), "..", "portfolio_data")
 PERSIST_DIRECTORY = os.path.abspath(os.path.join(BASE_DIR, "..", "chroma_db"))
 COLLECTION_NAME   = "portfolio"
-EMBEDDINGS_MODEL  = "BAAI/bge-m3"  # multilingüe, muy sólido para retrieval
-USE_NOTEBOOK_OUTPUTS = False       # pon True si quieres indexar outputs de celdas
+EMBEDDINGS_MODEL  = "BAAI/bge-m3"  # multilingüe
+USE_NOTEBOOK_OUTPUTS = True        # False, solo carga celdas markdown y code
 
 # Carpetas a ignorar
 EXCLUDE_DIRS = {
@@ -65,14 +62,6 @@ CODE_CHUNK_OVERLAP  = 80
 RETRIEVER_K          = 6
 RETRIEVER_FETCH_K    = 30
 RETRIEVER_LAMBDA     = 0.7   # 0=similaridad, 1=diversidad
-
-# Smoke test
-RUN_SMOKE_TEST = True
-SMOKE_TEST_QUERIES = [
-    "¿Dónde explico la arquitectura del proyecto?",
-    "función que carga el dataset y hace el split",
-    "cómo ejecuto el pipeline de entrenamiento",
-]
 
 
 # =======================
@@ -154,9 +143,9 @@ def load_documents(source_dir: str):
             except Exception as exc:
                 print(f"⚠️  Error al cargar {file_path}: {exc}")
 
-    print(f"🔎 Archivos escaneados: {total_files}")
+    print(f"Archivos escaneados: {total_files}")
     if by_ext:
-        print("📊 Resumen por extensión (n° de secciones):")
+        print("Resumen por extensión (n° de secciones):")
         for ext, count in by_ext.most_common():
             print(f"  {ext:>6}  →  {count}")
     return documents
@@ -236,7 +225,7 @@ def persist_chroma(chunks, embeddings):
 
 
 def main():
-    print(f"📥 Cargando documentos desde: {SOURCE_DIRECTORY}")
+    print(f"Cargando documentos desde: {SOURCE_DIRECTORY}")
     docs = load_documents(SOURCE_DIRECTORY)
     if not docs:
         print("No se cargaron documentos. Revisa path y dependencias de loaders.")
