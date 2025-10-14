@@ -2,10 +2,13 @@
 # Asistente RAG para Portfolio Personal
 
 ![Estado del Proyecto](https://img.shields.io/badge/Estado-En%20Desarrollo-blue)
-![Licencia](https://img.shields.io/badge/Licencia-MIT-green)
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
 ![Embeddings](https://img.shields.io/badge/Embeddings-BGE--M3-orange)
 ![Vector Store](https://img.shields.io/badge/Vector%20Store-ChromaDB-purple)
-![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
+![LangChain](https://img.shields.io/badge/LangChain-Framework-00BFFF?logo=chainlink&logoColor=white)
+![DeepSeek](https://img.shields.io/badge/DeepSeek-LLM%20Integration-8A2BE2?logo=deepnote&logoColor=white)
+
+
 
 Asistente RAG que ingiere la carpeta de proyectos local, construye un índice persistente en **ChromaDB** con embeddings avanzados **BGE‑M3** y responde preguntas a través de un LLM **DeepSeek**.
 
