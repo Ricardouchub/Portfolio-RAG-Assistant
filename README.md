@@ -52,7 +52,7 @@ Para las pruebas iniciales se incluyó únicamente el repositorio de la librerí
 |-- README.md              # Este archivo
 ```
 
-## Primeros pasos
+## Como usarlo
 
 1. **Prepara tus datos:** clona o descomprime el repositorio y coloca tus proyectos de portafolio (a cualquier nivel de profundidad) dentro de `portfolio_data/`. En este ejemplo la carpeta contiene únicamente el proyecto `evalcards`.
 2. **Instala las dependencias** (se recomienda Python 3.10 o superior):
@@ -90,7 +90,7 @@ Para las pruebas iniciales se incluyó únicamente el repositorio de la librerí
 ## Configuración y personalización
 
 - **Ajustes de DeepSeek:**
-  - `DEEPSEEK_API_KEY` (opcional) evita el prompt inicial.
+  - `DEEPSEEK_API_KEY` (opcional) para evitar el prompt inicial.
   - `DEEPSEEK_CHAT_MODEL` y `DEEPSEEK_BASE_URL` permiten usar otros endpoints o modelos.
 - **Soporte de loaders:** amplía `LOADER_MAPPING` en `src/ingest.py` para añadir CSV, HTML u otros formatos propietarios; también puedes activar/desactivar la inclusión de salidas en notebooks.
 - **Parámetros de segmentación:** ajusta los tamaños y solapes de los chunks para equilibrar el recall frente a la latencia; separa prosa y código según tus necesidades.
