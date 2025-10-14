@@ -92,15 +92,19 @@ Para las pruebas iniciales se incluyó únicamente el repositorio de la librerí
 - **Soporte de loaders:** amplía `LOADER_MAPPING` en `src/ingest.py` para añadir CSV, HTML u otros formatos propietarios; también puedes activar/desactivar la inclusión de salidas en notebooks.
 - **Parámetros de segmentación:** ajusta los tamaños y solapes de los chunks para equilibrar el recall frente a la latencia; separa prosa y código según tus necesidades.
 - **Comportamiento del recuperador:** modifica `RETRIEVER_K`, `RETRIEVER_FETCH_K` o cambia `search_type` si prefieres una búsqueda por similitud simple en lugar de MMR.
-- **Embeddings:** intercambia `EMBEDDINGS_MODEL` por un modelo más ligero si tienes recursos limitados, pero recuerda ajustar también `main.py` y `app.py`.
+- **Embeddings:** intercambia `EMBEDDINGS_MODEL` por un modelo más ligero en caso de tener recursos limitados, pero se debe ajustar también `main.py` y `app.py`.
 
 ## Ejemplos de consulta
 
-- *"Resume la arquitectura del proyecto de detección de fraude."*
-- *"¿Qué métricas soporta `evalcards` para forecasting?"*
-- *"Explica los pasos para graficar un modelo de series temporales con evalcards."*
+- *"Como se instala evalcards?"*
+- *"¿Qué métricas soporta evalcards para forecasting?"*
+- *"Dame un ejemplo de clasificación multi-label"*
 
 Estos ejemplos muestran cómo puedes preguntar por documentación técnica, flujos de trabajo o detalles específicos de una librería indexada.
+
+<img width="2527" height="978" alt="image" src="https://github.com/user-attachments/assets/2ceca712-1371-4369-8330-6a637093818a" />
+
+
 
 ## Ideas futuras
 
@@ -109,3 +113,5 @@ Estos ejemplos muestran cómo puedes preguntar por documentación técnica, fluj
 ## Autor
 
 **Ricardo Urdaneta**
+
+[GitHub](https://github.com/Ricardouchub) | [LinkedIn](https://www.linkedin.com/in/ricardourdanetacastro)
