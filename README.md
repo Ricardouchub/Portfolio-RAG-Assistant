@@ -103,9 +103,9 @@ Para las pruebas iniciales se incluyó únicamente el repositorio de la librerí
 - *"¿Qué métricas soporta evalcards para forecasting?"*
 - *"Dame un ejemplo de clasificación multi-label"*
 
-Estos ejemplos muestran cómo puedes preguntar por documentación técnica, flujos de trabajo o detalles específicos de una librería indexada.
+Estos ejemplos muestran cómo se puede preguntar por documentación técnica, flujos de trabajo o detalles específicos de un repositorio indexado.
 
-<img width="2527" height="978" alt="image" src="https://github.com/user-attachments/assets/2ceca712-1371-4369-8330-6a637093818a" />
+<img width="800" src="assets/RAG Assistant.png" alt="Main"/>
 
 
 
