@@ -96,11 +96,15 @@ Para las pruebas iniciales se incluyó únicamente el repositorio de la librerí
 
 ## Ejemplos de consulta
 
-- *"Resume la arquitectura del proyecto de detección de fraude."*
-- *"¿Qué métricas soporta `evalcards` para forecasting?"*
-- *"Explica los pasos para graficar un modelo de series temporales con evalcards."*
+- *"Como se instala evalcards?"*
+- *"¿Qué métricas soporta evalcards para forecasting?"*
+- *"Dame un ejemplo de clasificación multi-label"*
 
 Estos ejemplos muestran cómo puedes preguntar por documentación técnica, flujos de trabajo o detalles específicos de una librería indexada.
+
+<img width="2527" height="978" alt="image" src="https://github.com/user-attachments/assets/2ceca712-1371-4369-8330-6a637093818a" />
+
+
 
 ## Ideas futuras
 
@@ -109,3 +113,5 @@ Estos ejemplos muestran cómo puedes preguntar por documentación técnica, fluj
 ## Autor
 
 **Ricardo Urdaneta**
+
+[GitHub](https://github.com/Ricardouchub) | [LinkedIn](https://www.linkedin.com/in/ricardourdanetacastro)
