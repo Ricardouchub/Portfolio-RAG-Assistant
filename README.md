@@ -67,7 +67,7 @@ Para las pruebas iniciales se incluyó únicamente un repositorio personal '[eva
    python src/ingest.py
    ```
 
-   Esto crea o actualiza la base vectorial en `chroma_db/` con la colección `portfolio`.
+   Esto crea o actualiza la base vectorial en `chroma_db/` con la colección `portfolio_data`.
 
 4. **Escoge tu interfaz:**
 
