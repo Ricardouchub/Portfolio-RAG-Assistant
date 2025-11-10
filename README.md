@@ -97,7 +97,7 @@ Para las pruebas iniciales se incluyó únicamente un repositorio personal '[eva
 - **Comportamiento del recuperador:** modifica `RETRIEVER_K`, `RETRIEVER_FETCH_K` o cambia `search_type` si prefieres una búsqueda por similitud simple en lugar de MMR.
 - **Embeddings:** intercambia `EMBEDDINGS_MODEL` por un modelo más ligero en caso de tener recursos limitados, pero se debe ajustar también `main.py` y `app.py`.
 
-## Ejemplos de consulta
+## Ejemplo de consultas
 
 - *"Como se instala evalcards?"*
 - *"¿Qué métricas soporta evalcards para forecasting?"*
@@ -108,10 +108,6 @@ Estos ejemplos muestran cómo se puede preguntar por documentación técnica, fl
 <img width="800" src="assets/RAG Assistant.png" alt="Main"/>
 
 
-
-## Ideas futuras
-
-- Soportar LLMs locales (como Ollama, etc) a través de LangChain.
 
 ## Autor
 
